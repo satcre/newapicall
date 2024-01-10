@@ -3,7 +3,6 @@ require "functions_framework"
 FunctionsFramework.http "call_new_api" do |request|
   require "net/http"
   require "json"
-  require "pry"
 
   payload = JSON.parse(request.body.read)
 

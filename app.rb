@@ -1,11 +1,12 @@
 require "functions_framework"
 
-FunctionsFramework.http "send_post_request" do |request|
+FunctionsFramework.http "call_new_api" do |request|
   require "net/http"
   require "json"
+  require "pry"
 
   payload = JSON.parse(request.body.read)
-  
+
   api_url = "https://staging-sendselly.buddyandselly.com/sendin/api/v1/purchase_requests"
   api_key = "13336be6-71f7-4e56-b265-c68044b1e8ad"
 
@@ -17,8 +18,7 @@ FunctionsFramework.http "send_post_request" do |request|
   http_request["Content-Type"] = "application/json"
   http_request["Authorization"] = api_key
   http_request.body = payload.to_json
-
   response = http.request(http_request)
 
-  response
+  [200, { "Content-Type" => "application/json" }, [response.body]]
 end
